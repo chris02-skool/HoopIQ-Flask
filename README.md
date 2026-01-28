@@ -8,10 +8,6 @@
 venv\Scripts\activate
 
 
-**macOS/Linux**
-source venv/bin/activate
-
-
 2. **Install dependencies** (first time only):
 pip install -r requirements.txt
 
