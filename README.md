@@ -13,11 +13,15 @@ venv\Scripts\activate
 pip install -r requirements.txt
 
 
-3. **Run the app:**
+3. **Verification of flask (Should see 3.1.2):**
+python -c "import flask; print(flask.__version__)"
+
+
+4. **Run the app:**
 python app.py
 
 
-4. Open your browser at:
+5. Open your browser at:
 http://localhost:5000
 
 
