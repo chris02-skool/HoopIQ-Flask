@@ -1,0 +1,104 @@
+<!--
+    Basketball Shot Tracker App
+    Developed by Christopher Hong
+    Team Name: HoopIQ
+    Team Members: Christopher Hong, Alfonso Mejia Vasquez, Gondra Kelly, Matthew Margulies, Carlos Orozco
+    Start Web Development Date: October 2025
+    Finished Web Development Date: June 2026 (Ideally)
+    templates/login.html 
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HoopIQ Login</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 350px;
+            margin: 120px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            width: 45%;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>HoopIQ</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="color: green; text-align: center; margin-bottom: 15px;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="/login">
+            <label>Username</label>
+            <input type="text" name="username" required>
+
+            <label>Password</label>
+            <input type="password" name="password" required>
+
+            <div class="button-row">
+                <button type="submit" formaction="/register" formmethod="GET">
+                    Register
+                </button>
+
+                <button type="submit">
+                    Login
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
