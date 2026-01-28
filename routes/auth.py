@@ -8,6 +8,14 @@
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 
+# Temporary shot data (will move later)
+shots_data = [
+    {"shot_id": 1, "backboard": False, "rim": False, "net_only": True, "made": True},
+    {"shot_id": 2, "backboard": True,  "rim": False, "net_only": False, "made": True},
+    {"shot_id": 3, "backboard": False, "rim": True,  "net_only": False, "made": False},
+    {"shot_id": 4, "backboard": True,  "rim": True,  "net_only": False, "made": True}
+]
+
 auth_bp = Blueprint('auth', __name__)
 
 # Login Page
@@ -40,8 +48,21 @@ def register_user():
     flash("Registration successful! Please log in.")
     return redirect(url_for("auth.login_page"))
 
-
-# New page after login
+# New Page after login
 @auth_bp.route("/new")
 def new_page():
-    return render_template("new_page.html")
+    total_shots = len(shots_data)
+    made_shots = sum(1 for s in shots_data if s["made"])
+    net_only = sum(1 for s in shots_data if s["net_only"])
+    backboard_hits = sum(1 for s in shots_data if s["backboard"])
+    rim_hits = sum(1 for s in shots_data if s["rim"])
+
+    return render_template(
+        "new_page.html",
+        shots=shots_data,
+        total_shots=total_shots,
+        made_shots=made_shots,
+        net_only=net_only,
+        backboard_hits=backboard_hits,
+        rim_hits=rim_hits
+    )

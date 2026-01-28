@@ -18,7 +18,7 @@ def create_app():
 
     # Register the auth blueprint
     app.register_blueprint(auth_bp)
-
+    
     return app
 
 if __name__ == "__main__":

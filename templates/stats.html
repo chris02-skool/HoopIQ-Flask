@@ -5,31 +5,19 @@
     Team Members: Christopher Hong, Alfonso Mejia Vasquez, Gondra Kelly, Matthew Margulies, Carlos Orozco
     Start Web Development Date: October 2025
     Finished Web Development Date: June 2026 (Ideally)
-    templates/new_page.html 
+    templates/stats.html 
 -->
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>HoopIQ Session Dashboard</title>
+    <title>Shot Stats</title>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div style="display:flex; justify-content:space-between; align-items:center;">
-    <h1>HoopIQ – Session Dashboard</h1>
+<h1>Shot Detection Table</h1>
 
-    <form method="GET" action="/">
-        <button type="submit">Logout</button>
-    </form>
-</div>
-
-<hr>
-
-<!-- SHOT TABLE -->
-<h2>Shot Detection Table</h2>
-
-<table border="1" cellpadding="6" style="margin:auto;">
+<table border="1" cellpadding="6">
     <tr>
         <th>Shot #</th>
         <th>Backboard</th>
@@ -49,25 +37,21 @@
     {% endfor %}
 </table>
 
-<!-- SUMMARY -->
-<h3 style="text-align:center;">Session Summary</h3>
+<h2>Averages / Summary</h2>
 
-<ul style="width:300px; margin:auto;">
+<ul>
     <li>Total Shots: {{ total_shots }}</li>
     <li>Made Shots: {{ made_shots }}</li>
     <li>Backboard Hits: {{ backboard_hits }}</li>
     <li>Rim Hits: {{ rim_hits }}</li>
-    <li>Nothing But Net: {{ net_only }}</li>
+    <li>Net Only (Nothing But Net): {{ net_only }}</li>
 </ul>
 
-<hr>
+<br>
 
-<!-- PLACEHOLDERS -->
-<h3>Trajectory Graph (Coming Soon)</h3>
-<p>[Graph will go here]</p>
-
-<h3>Export Session</h3>
-<button disabled>Export CSV (Coming Soon)</button>
+<form method="GET" action="/new">
+    <button type="submit">Back</button>
+</form>
 
 </body>
 </html>
