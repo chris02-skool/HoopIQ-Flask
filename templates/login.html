@@ -49,14 +49,31 @@
             justify-content: space-between;
         }
 
-        button {
+        button, .button-link {
             width: 45%;
             padding: 8px;
             cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .button-link {
+            background-color: #6c757d; /* gray for register */
         }
 
         .error {
             color: red;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .flash-message {
+            color: green;
             text-align: center;
             margin-bottom: 15px;
         }
@@ -66,17 +83,18 @@
 <body>
     <div class="container">
         <h1>HoopIQ</h1>
+        <h3 style="text-align: center; margin-bottom: 25px; font-weight: normal; color: #555;">
+            Please log in
+        </h3>
+
 
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
-                    <div style="color: green; text-align: center; margin-bottom: 15px;">
-                        {{ message }}
-                    </div>
+                    <div class="flash-message">{{ message }}</div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
-
 
         {% if error %}
             <div class="error">{{ error }}</div>
@@ -90,13 +108,11 @@
             <input type="password" name="password" required>
 
             <div class="button-row">
-                <button type="submit" formaction="/register" formmethod="GET">
-                    Register
-                </button>
+                <!-- Register button as a link (always works) -->
+                <a href="/register" class="button-link">Register</a>
 
-                <button type="submit">
-                    Login
-                </button>
+                <!-- Login button -->
+                <button type="submit">Login</button>
             </div>
         </form>
     </div>

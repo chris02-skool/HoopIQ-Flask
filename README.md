@@ -21,9 +21,12 @@ python -c "import flask; print(flask.__version__)"
 python app.py
 
 
-5. Open your browser at:
+5. **Open your browser at:**
 http://localhost:5000
 
+
+6. **To exit out of venv, type:**
+deactivate
 
 ---
 

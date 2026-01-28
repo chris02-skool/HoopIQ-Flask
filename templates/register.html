@@ -49,10 +49,21 @@
             justify-content: space-between;
         }
 
-        button {
+        button, .button-link {
             width: 45%;
             padding: 8px;
             cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .button-link {
+            background-color: #6c757d; /* gray for Cancel */
         }
 
         .error {
@@ -66,6 +77,9 @@
 <body>
     <div class="container">
         <h1>HoopIQ</h1>
+        <h3 style="text-align: center; margin-bottom: 25px; font-weight: normal; color: #555;">
+            Register a new account
+        </h3>
 
         {% if error %}
             <div class="error">{{ error }}</div>
@@ -79,13 +93,11 @@
             <input type="password" name="password" required>
 
             <div class="button-row">
-                <button type="submit" formaction="/">
-                    Cancel
-                </button>
+                <!-- Cancel button as a link (always works) -->
+                <a href="/" class="button-link">Cancel</a>
 
-                <button type="submit">
-                    Register
-                </button>
+                <!-- Register button -->
+                <button type="submit">Register</button>
             </div>
         </form>
     </div>
