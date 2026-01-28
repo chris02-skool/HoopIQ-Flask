@@ -5,6 +5,7 @@
 1. **Activate virtual environment** before running Flask:
 
 **Windows**
+python -m venv venv
 venv\Scripts\activate
 
 
