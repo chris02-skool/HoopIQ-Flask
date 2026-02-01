@@ -14,15 +14,34 @@ import numpy as np, math
 # Temporary shot data (will move later)
 # Temporary shot data for testing
 shots_data = [
-    {"shot_id": 1, "backboard": False, "rim": False, "net_only": True, "made": True,
-     "top_x": [0,1,2], "top_y": [0,10,20], "side_x": [0,1,2], "side_y": [0,5,10]},
-    {"shot_id": 2, "backboard": True, "rim": False, "net_only": False, "made": True,
-     "top_x": [0,1,2], "top_y": [0,8,15], "side_x": [0,1,2], "side_y": [0,4,9]},
-    {"shot_id": 3, "backboard": False, "rim": True, "net_only": False, "made": False,
-     "top_x": [0,1,2], "top_y": [0,9,18], "side_x": [0,1,2], "side_y": [0,6,12]}
+    {"top_x":[0,1,0,0], "top_y":[25,18,12,4.25], "side_x":[25,20,10,4.5], "side_y":[6,12,11,10], "result":"Make",
+     "Backboard":1, "Rim":1, "Net":0},
+    {"top_x":[0,2,1,0], "top_y":[25,17.5,11,4.25], "side_x":[25,20,10,4.5], "side_y":[6,13,11,10], "result":"Make",
+     "Backboard":0, "Rim":0, "Net":0},
+    {"top_x":[0,0,0,0], "top_y":[25,18,12,4.25], "side_x":[25,20,10,4.5], "side_y":[6,15,13,10], "result":"Make",
+     "Backboard":1, "Rim":0, "Net":1},
+    {"top_x":[0,-2,-3,-3], "top_y":[25,17,12,6], "side_x":[25,20,10,4.5], "side_y":[6,9,8,4], "result":"Miss",
+     "Backboard":1, "Rim":1, "Net":0},
+    {"top_x":[0,1,2,3], "top_y":[25,18,13,7], "side_x":[25,20,10,4.5], "side_y":[6,9,8,5], "result":"Miss",
+     "Backboard":0, "Rim":1, "Net":1},
+    {"top_x":[0,-1,-0.5,0], "top_y":[25,19,13,4.25], "side_x":[25,20,10,4.5], "side_y":[6,10,11,10], "result":"Make",
+     "Backboard":1, "Rim":0, "Net":1},
+    {"top_x":[0,-1,-2,-2.5], "top_y":[25,18,13,6], "side_x":[25,20,10,4.5], "side_y":[6,8,8,4], "result":"Miss",
+     "Backboard":0, "Rim":1, "Net":0},
+    {"top_x":[0,-2,-1,0], "top_y":[25,17,10,4.25], "side_x":[25,20,10,4.5], "side_y":[6,13,12,10], "result":"Make",
+     "Backboard":1, "Rim":0, "Net":1},
+    {"top_x":[0,2,3,3], "top_y":[25,19,14,6], "side_x":[25,20,10,4.5], "side_y":[6,8,7,4], "result":"Miss",
+     "Backboard":0, "Rim":1, "Net":0},
+    {"top_x":[0,0,1,2], "top_y":[25,18,14,6], "side_x":[25,20,10,4.5], "side_y":[6,8,7,4], "result":"Miss",
+     "Backboard":1, "Rim":1, "Net":0}
 ]
 
+
 def generate_top_view(shots, selected_idx):
+    """
+    Generates a top-view basketball court with a placeholder trajectory.
+    """
+
     fig = go.Figure()
 
     # Half-court size
@@ -80,7 +99,7 @@ def generate_top_view(shots, selected_idx):
     # Add shots
     for i in selected_idx:
         shot = shots[i]
-        color = "green" if shot['made'] else "red"
+        color = "green" if shot['result'] == "Make" else "red"
         fig.add_trace(go.Scatter(x=shot['top_x'], y=shot['top_y'],
                                  mode='lines+markers', line=dict(color=color, width=3),
                                  marker=dict(size=6),
@@ -96,17 +115,121 @@ def generate_top_view(shots, selected_idx):
     return to_html(fig, full_html=False)
 
 def generate_side_view(shots, selected_idx):
+    """
+    Generates a top-view basketball court with a placeholder trajectory.
+    """
+
     fig = go.Figure()
+
+    # Canonical HS Geometry
+    HALF_COURT_X = 50
+
+    BACKBOARD_X = 3             
+    BACKBOARD_WIDTH = 0.1       
+    BACKBOARD_HEIGHT = 3.5
+    RIM_HEIGHT = 10
+    RIM_DIAMETER = 1.5          
+    RIM_OFFSET_FROM_BACKBOARD = 1.25  
+
+    FLOOR_Y = 0
+
+    # Floor
+    fig.add_shape(
+        type="line",
+        x0=-5, y0=FLOOR_Y,
+        x1=HALF_COURT_X, y1=FLOOR_Y,
+        line=dict(color="black", width=2)
+    )
+
+    # Half-court line
+    fig.add_shape(
+        type="line",
+        x0=HALF_COURT_X, y0=0,
+        x1=HALF_COURT_X, y1=16,
+        line=dict(color="gray", width=2, dash="dash")
+    )
+    fig.add_annotation(
+        x=HALF_COURT_X, y=16,
+        text="Half Court Line",
+        showarrow=False,
+        yshift=10,
+        font=dict(color="gray")
+    )
+
+    # Backboard
+    backboard_bottom_y = RIM_HEIGHT - 1.5
+    backboard_top_y = backboard_bottom_y + BACKBOARD_HEIGHT
+
+    fig.add_shape(
+        type="line",
+        x0=BACKBOARD_X, y0=backboard_bottom_y,
+        x1=BACKBOARD_X, y1=backboard_top_y,
+        line=dict(color="black", width=3)
+    )
+    
+
+    # Rim
+    rim_x_left = BACKBOARD_X + RIM_OFFSET_FROM_BACKBOARD - RIM_DIAMETER/2
+    rim_x_right = BACKBOARD_X + RIM_OFFSET_FROM_BACKBOARD + RIM_DIAMETER/2
+
+    fig.add_shape(
+        type="line",
+        x0=rim_x_left, y0=RIM_HEIGHT,
+        x1=rim_x_right, y1=RIM_HEIGHT,
+        line=dict(color="red", width=3)
+    )
+
+    # Add net under the rim (side view)
+    net_segments = 6  # number of strands
+    net_depth = 1.5   # how far the net hangs down
+    net_spacing = RIM_DIAMETER / (net_segments - 1)
+    for i in range(net_segments):
+        x = rim_x_left + i * net_spacing
+        fig.add_shape(
+            type="line",
+            x0=x, y0=RIM_HEIGHT,
+            x1=x, y1=RIM_HEIGHT - net_depth,
+            line=dict(color="blue", width=1)  # adjust color/width as needed
+        )
+
+    # 3-point line marker (vertical line)
+    three_point_distance = BACKBOARD_X + RIM_OFFSET_FROM_BACKBOARD + 19.75
+    fig.add_shape(
+        type="line",
+        x0=three_point_distance, y0=0,
+        x1=three_point_distance, y1=16,
+        line=dict(color="purple", width=2, dash="dash")
+    )
+    fig.add_annotation(
+        x=three_point_distance, y=16,
+        text="3-Point Line",
+        showarrow=False,
+        yshift=10,
+        font=dict(color="purple")
+    )
+
+    # Shots (plot real trajectory points)
     for i in selected_idx:
         shot = shots[i]
-        color = "green" if shot['made'] else "red"
+        color = "green" if shot["result"] == "Make" else "red"
         fig.add_trace(go.Scatter(
-            x=shot["side_x"], y=shot["side_y"],
+            x=shot["side_x"],
+            y=shot["side_y"],
             mode="lines+markers",
             line=dict(color=color, width=3),
             marker=dict(size=6),
             name=f"Shot {i+1}"
         ))
+
+    # Layout
+    fig.update_layout(
+        title="Side View of Ball Trajectory (High-School Court)",
+        autosize=True,
+        xaxis=dict(range=[HALF_COURT_X + 1, 0],scaleanchor="y", scaleratio=1),
+        yaxis=dict(range=[0, 16]),
+        height=500
+    )
+
     return to_html(fig, full_html=False)
 
 auth_bp = Blueprint('auth', __name__)
@@ -146,10 +269,10 @@ def register_user():
 def new_page():
     # 1️⃣ Stats calculations
     total_shots = len(shots_data)
-    made_shots = sum(1 for s in shots_data if s["made"])
-    backboard_hits = sum(1 for s in shots_data if s["backboard"])
-    rim_hits = sum(1 for s in shots_data if s["rim"])
-    net_only = sum(1 for s in shots_data if s["net_only"])
+    made_shots = sum(1 for s in shots_data if s["result"] == "Make")
+    backboard_hits = sum(1 for s in shots_data if s["Backboard"])
+    rim_hits = sum(1 for s in shots_data if s["Rim"])
+    net_only = sum(1 for s in shots_data if s["Net"] and not s["Rim"] and not s["Backboard"])
 
     # 2️⃣ Trajectory graphs
     selected_idx = list(range(len(shots_data)))  # show all shots for now
