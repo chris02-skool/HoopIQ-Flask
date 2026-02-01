@@ -62,10 +62,26 @@
 
 <hr>
 
-<!-- PLACEHOLDERS -->
-<h3>Trajectory Graph (Coming Soon)</h3>
-<p>[Graph will go here]</p>
+<!-- ----------------------------- -->
+<!-- Trajectory Graphs -->
+<!-- ----------------------------- -->
+<div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+    
+    <!-- Top Graph Container -->
+    <div style="flex:1; min-width:400px; height:500px; display:flex; justify-content:center; align-items:center; background-color:#f8f8f8;">
+        {{ top_graph|safe }}
+    </div>
 
+    <!-- Side Graph Container -->
+    <div style="flex:1; min-width:400px; height:500px; display:flex; justify-content:center; align-items:center; background-color:#f8f8f8;">
+        {{ side_graph|safe }}
+    </div>
+
+</div>
+
+
+<hr>
+<!-- PLACEHOLDERS -->
 <h3>Export Session</h3>
 <button disabled>Export CSV (Coming Soon)</button>
 
