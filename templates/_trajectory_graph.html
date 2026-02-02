@@ -1,0 +1,25 @@
+<!--
+    Basketball Shot Tracker App
+    Developed by Christopher Hong
+    Team Name: HoopIQ
+    Team Members: Christopher Hong, Alfonso Mejia Vasquez, Gondra Kelly, Matthew Margulies, Carlos Orozco
+    Start Web Development Date: October 2025
+    Finished Web Development Date: June 2026 (Ideally)
+    templates/_trajectory_graph.html 
+-->
+
+<!-- Trajectory Graphs -->
+
+<div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+    
+    <!-- Top Graph Container -->
+    <div style="flex:1; min-width:400px; height:500px; display:flex; justify-content:center; align-items:center; background-color:#f8f8f8;">
+        {{ top_graph|safe }}
+    </div>
+
+    <!-- Side Graph Container -->
+    <div style="flex:1; min-width:400px; height:500px; display:flex; justify-content:center; align-items:center; background-color:#f8f8f8;">
+        {{ side_graph|safe }}
+    </div>
+
+</div>

@@ -5,19 +5,13 @@
     Team Members: Christopher Hong, Alfonso Mejia Vasquez, Gondra Kelly, Matthew Margulies, Carlos Orozco
     Start Web Development Date: October 2025
     Finished Web Development Date: June 2026 (Ideally)
-    templates/stats.html 
+    templates/_stats_table.html 
 -->
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Shot Stats</title>
-</head>
-<body>
+<!-- SHOT TABLE -->
+<h2>Shot Detection Table</h2>
 
-<h1>Shot Detection Table</h1>
-
-<table border="1" cellpadding="6">
+<table border="1" cellpadding="6" style="margin:auto;">
     <tr>
         <th>Shot #</th>
         <th>Backboard</th>
@@ -28,30 +22,22 @@
 
     {% for shot in shots %}
     <tr>
-        <td>{{ shot.shot_id }}</td>
-        <td>{{ "Yes" if shot.backboard else "No" }}</td>
-        <td>{{ "Yes" if shot.rim else "No" }}</td>
-        <td>{{ "Yes" if shot.net_only else "No" }}</td>
-        <td>{{ "Made" if shot.made else "Miss" }}</td>
+        <td>{{ loop.index }}</td>       
+        <td>{{ "Yes" if shot.Backboard else "No" }}</td>
+        <td>{{ "Yes" if shot.Rim else "No" }}</td>
+        <td>{{ "Yes" if shot.Net else "No" }}</td>
+        <td>{{ "Made" if shot.result == "Make" else "Miss" }}</td>
     </tr>
     {% endfor %}
 </table>
 
-<h2>Averages / Summary</h2>
+<!-- SUMMARY -->
+<h3 style="text-align:center;">Session Summary</h3>
 
-<ul>
+<ul style="width:300px; margin:auto;">
     <li>Total Shots: {{ total_shots }}</li>
     <li>Made Shots: {{ made_shots }}</li>
     <li>Backboard Hits: {{ backboard_hits }}</li>
     <li>Rim Hits: {{ rim_hits }}</li>
-    <li>Net Only (Nothing But Net): {{ net_only }}</li>
+    <li>Nothing But Net: {{ net_only }}</li>
 </ul>
-
-<br>
-
-<form method="GET" action="/new">
-    <button type="submit">Back</button>
-</form>
-
-</body>
-</html>

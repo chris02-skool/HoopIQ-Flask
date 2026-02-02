@@ -15,72 +15,29 @@
 </head>
 <body>
 
+<!-- ----------------------------- -->
 <!-- TOP BAR -->
-<div style="display:flex; justify-content:space-between; align-items:center;">
-    <h1>HoopIQ – Session Dashboard</h1>
-
-    <form method="GET" action="/">
-        <button type="submit">Logout</button>
-    </form>
-</div>
+<!-- ----------------------------- -->
+{% include "_top_bar.html" %}
 
 <hr>
 
-<!-- SHOT TABLE -->
-<h2>Shot Detection Table</h2>
+<!-- ----------------------------- -->
+<!-- Stats Table -->
+<!-- ----------------------------- -->
+{% include "_stats_table.html" %}
 
-<table border="1" cellpadding="6" style="margin:auto;">
-    <tr>
-        <th>Shot #</th>
-        <th>Backboard</th>
-        <th>Rim</th>
-        <th>Net Only</th>
-        <th>Made</th>
-    </tr>
-
-    {% for shot in shots %}
-    <tr>
-        <td>{{ shot.shot_id }}</td>
-        <td>{{ "Yes" if shot.backboard else "No" }}</td>
-        <td>{{ "Yes" if shot.rim else "No" }}</td>
-        <td>{{ "Yes" if shot.net_only else "No" }}</td>
-        <td>{{ "Made" if shot.made else "Miss" }}</td>
-    </tr>
-    {% endfor %}
-</table>
-
-<!-- SUMMARY -->
-<h3 style="text-align:center;">Session Summary</h3>
-
-<ul style="width:300px; margin:auto;">
-    <li>Total Shots: {{ total_shots }}</li>
-    <li>Made Shots: {{ made_shots }}</li>
-    <li>Backboard Hits: {{ backboard_hits }}</li>
-    <li>Rim Hits: {{ rim_hits }}</li>
-    <li>Nothing But Net: {{ net_only }}</li>
-</ul>
 
 <hr>
 
 <!-- ----------------------------- -->
 <!-- Trajectory Graphs -->
 <!-- ----------------------------- -->
-<div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
-    
-    <!-- Top Graph Container -->
-    <div style="flex:1; min-width:400px; height:500px; display:flex; justify-content:center; align-items:center; background-color:#f8f8f8;">
-        {{ top_graph|safe }}
-    </div>
-
-    <!-- Side Graph Container -->
-    <div style="flex:1; min-width:400px; height:500px; display:flex; justify-content:center; align-items:center; background-color:#f8f8f8;">
-        {{ side_graph|safe }}
-    </div>
-
-</div>
+{% include "_trajectory_graph.html" %}
 
 
 <hr>
+
 <!-- PLACEHOLDERS -->
 <h3>Export Session</h3>
 <button disabled>Export CSV (Coming Soon)</button>
