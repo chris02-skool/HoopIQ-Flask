@@ -35,3 +35,4 @@ deactivate
 - Always make sure `(venv)` is active in the terminal.
 - Flask version: 3.1.2
 - Python versions supported: 3.11–3.14
+- maybe try to use https://www.gtk.org/
