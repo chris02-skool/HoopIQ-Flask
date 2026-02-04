@@ -6,8 +6,13 @@
 # Finished Web Development Date: June 2026 (Ideally)
 # routes/auth.py
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, Response
 from services.trajectory import generate_top_view, generate_side_view
+import csv
+from io import StringIO
+from services.export import export_session_csv
+from datetime import datetime
+
 
 # Temporary shot data (will move later)
 # Temporary shot data for testing
@@ -93,3 +98,9 @@ def new_page():
         top_graph=top_graph,
         side_graph=side_graph
     )
+
+@auth_bp.route("/export/session")
+def export_session():
+    # For now, pass shots_data and session datetime (replace later with real session)
+    session_datetime = datetime(2026, 2, 4, 11, 30)
+    return export_session_csv(shots_data, session_datetime)
